@@ -27,6 +27,14 @@ const UploadData = () => {
   const [formData, setFormData] = useState({
     ph: "",
     tds: "",
+    turbidity: "",
+    temperature: "",
+    chlorine: "",
+    fluoride: "",
+    nitrate: "",
+    arsenic: "",
+    hardness: "",
+    iron: "",
     impurities: [] as string[],
     comment: ""
   });
@@ -64,10 +72,133 @@ const UploadData = () => {
     }
   };
 
+  const analyzeWaterQuality = (data: any) => {
+    let score = 100;
+    const recommendations: string[] = [];
+    
+    const ph = parseFloat(data.ph);
+    const tds = parseFloat(data.tds);
+    const turbidity = parseFloat(data.turbidity) || 0;
+    const temperature = parseFloat(data.temperature) || 25;
+    const chlorine = parseFloat(data.chlorine) || 0;
+    const fluoride = parseFloat(data.fluoride) || 0;
+    const nitrate = parseFloat(data.nitrate) || 0;
+    const arsenic = parseFloat(data.arsenic) || 0;
+    const hardness = parseFloat(data.hardness) || 0;
+    const iron = parseFloat(data.iron) || 0;
+    
+    // pH analysis
+    if (ph < 6.5 || ph > 8.5) {
+      const penalty = Math.min(20, Math.abs(ph - 7.5) * 8);
+      score -= penalty;
+      recommendations.push(ph < 6.5 ? "pH too acidic - consider pH balancing" : "pH too alkaline - consider acid neutralization");
+    }
+    
+    // TDS analysis
+    if (tds > 500) {
+      const penalty = Math.min(15, (tds - 500) / 50);
+      score -= penalty;
+      recommendations.push("High TDS detected - consider TDS filtration system");
+    }
+    
+    // Turbidity analysis
+    if (turbidity > 5) {
+      const penalty = Math.min(15, (turbidity - 5) * 2);
+      score -= penalty;
+      recommendations.push("High turbidity - use sediment filtration");
+    }
+    
+    // Temperature analysis
+    if (temperature > 30) {
+      const penalty = Math.min(5, temperature - 30);
+      score -= penalty;
+      recommendations.push("Water temperature too high - consider cooling");
+    }
+    
+    // Chlorine analysis
+    if (chlorine < 0.2 || chlorine > 1) {
+      score -= 10;
+      recommendations.push(chlorine < 0.2 ? "Insufficient chlorination - risk of bacteria" : "Over-chlorinated - reduce chlorine levels");
+    }
+    
+    // Fluoride analysis
+    if (fluoride > 1.5) {
+      const penalty = Math.min(15, (fluoride - 1.5) * 5);
+      score -= penalty;
+      recommendations.push("Fluoride levels too high - use defluoridation");
+    }
+    
+    // Nitrate analysis
+    if (nitrate > 50) {
+      const penalty = Math.min(15, (nitrate - 50) / 5);
+      score -= penalty;
+      recommendations.push("High nitrate levels - consider reverse osmosis");
+    }
+    
+    // Arsenic analysis
+    if (arsenic > 0.01) {
+      score -= 20;
+      recommendations.push("Arsenic contamination detected - immediate treatment required");
+    }
+    
+    // Hardness analysis
+    if (hardness > 300) {
+      const penalty = Math.min(10, (hardness - 300) / 20);
+      score -= penalty;
+      recommendations.push("Very hard water - consider water softening");
+    }
+    
+    // Iron analysis
+    if (iron > 0.3) {
+      const penalty = Math.min(10, (iron - 0.3) * 10);
+      score -= penalty;
+      recommendations.push("High iron content - use iron removal filter");
+    }
+    
+    // Impurities analysis
+    if (data.impurities.length > 0) {
+      score -= data.impurities.length * 5;
+      recommendations.push(`${data.impurities.length} contamination type(s) detected`);
+      
+      if (data.impurities.includes("Heavy Metals")) {
+        recommendations.push("Heavy metal contamination requires immediate attention");
+        score -= 15;
+      }
+      if (data.impurities.includes("Bacteria")) {
+        recommendations.push("Bacterial contamination - boil water before consumption");
+        score -= 15;
+      }
+    }
+    
+    const finalScore = Math.max(0, Math.round(score * 100) / 100);
+    
+    let status = "Safe to Drink ✅";
+    let riskLevel: "low" | "medium" | "high" = "low";
+    
+    if (finalScore > 70) {
+      status = "Safe to Drink ✅";
+      riskLevel = "low";
+    } else if (finalScore > 40) {
+      status = "Needs Filtration ⚠️";
+      riskLevel = "medium";
+    } else {
+      status = "Unsafe ❌";
+      riskLevel = "high";
+    }
+    
+    return {
+      purityIndex: finalScore,
+      status,
+      riskLevel,
+      details: recommendations,
+      advice: status
+    };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validation
+    // Enhanced validation
     if (!formData.ph || !formData.tds) {
       toast({
         title: "Validation Error",
@@ -100,61 +231,17 @@ const UploadData = () => {
 
     setIsSubmitting(true);
 
-    // Mock API call with AI analysis
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Generate mock results based on input
-      let purityIndex = 100;
-      let advice = "Water quality is excellent!";
-      let riskLevel: "low" | "medium" | "high" = "low";
-      const details: string[] = [];
-
-      // pH analysis
-      if (ph < 6.5 || ph > 8.5) {
-        purityIndex -= 20;
-        advice = "pH levels are outside optimal range";
-        riskLevel = ph < 6.0 || ph > 9.0 ? "high" : "medium";
-        details.push(ph < 6.5 ? "pH too acidic - consider pH balancing" : "pH too alkaline - consider acid neutralization");
-      }
-
-      // TDS analysis
-      if (tds > 500) {
-        purityIndex -= 25;
-        advice = "High Total Dissolved Solids detected";
-        riskLevel = tds > 1000 ? "high" : "medium";
-        details.push("Consider using TDS filtration system");
-      }
-
-      // Impurities analysis
-      if (formData.impurities.length > 0) {
-        purityIndex -= formData.impurities.length * 10;
-        riskLevel = formData.impurities.length > 2 ? "high" : "medium";
-        details.push(`${formData.impurities.length} contamination type(s) detected`);
-        
-        if (formData.impurities.includes("Heavy Metals")) {
-          details.push("Heavy metal contamination requires immediate attention");
-          riskLevel = "high";
-        }
-        if (formData.impurities.includes("Bacteria")) {
-          details.push("Bacterial contamination - boil water before consumption");
-          riskLevel = "high";
-        }
-      }
-
-      purityIndex = Math.max(0, purityIndex);
-
-      setResults({
-        purityIndex,
-        advice: purityIndex > 80 ? "Water quality is good" : purityIndex > 60 ? "Water quality needs attention" : "Water quality is poor - take immediate action",
-        riskLevel,
-        details
-      });
-
+      const analysisResults = analyzeWaterQuality(formData);
+      
+      setResults(analysisResults);
       setShowResults(true);
+      
       toast({
         title: "Analysis Complete",
-        description: "AI has analyzed your water quality data",
+        description: "Advanced water quality analysis completed",
       });
 
     } catch (error) {
@@ -210,35 +297,173 @@ const UploadData = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="ph">pH Value *</Label>
-                    <Input
-                      id="ph"
-                      type="number"
-                      step="0.1"
-                      min="0"
-                      max="14"
-                      value={formData.ph}
-                      onChange={(e) => setFormData(prev => ({ ...prev, ph: e.target.value }))}
-                      placeholder="7.0"
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground">Range: 0-14</p>
+                <div className="space-y-4">
+                  {/* Primary Parameters */}
+                  <div>
+                    <h4 className="font-semibold mb-3 text-primary">Primary Parameters *</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="ph">pH Value *</Label>
+                        <Input
+                          id="ph"
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="14"
+                          value={formData.ph}
+                          onChange={(e) => setFormData(prev => ({ ...prev, ph: e.target.value }))}
+                          placeholder="7.0"
+                          required
+                        />
+                        <p className="text-xs text-muted-foreground">Range: 0-14</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="tds">TDS (ppm) *</Label>
+                        <Input
+                          id="tds"
+                          type="number"
+                          min="0"
+                          max="2000"
+                          value={formData.tds}
+                          onChange={(e) => setFormData(prev => ({ ...prev, tds: e.target.value }))}
+                          placeholder="150"
+                          required
+                        />
+                        <p className="text-xs text-muted-foreground">Total Dissolved Solids</p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="tds">TDS (ppm) *</Label>
-                    <Input
-                      id="tds"
-                      type="number"
-                      min="0"
-                      max="2000"
-                      value={formData.tds}
-                      onChange={(e) => setFormData(prev => ({ ...prev, tds: e.target.value }))}
-                      placeholder="150"
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground">Total Dissolved Solids</p>
+
+                  {/* Physical Parameters */}
+                  <div>
+                    <h4 className="font-semibold mb-3 text-primary">Physical Parameters</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="turbidity">Turbidity (NTU)</Label>
+                        <Input
+                          id="turbidity"
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          max="50"
+                          value={formData.turbidity}
+                          onChange={(e) => setFormData(prev => ({ ...prev, turbidity: e.target.value }))}
+                          placeholder="2.5"
+                        />
+                        <p className="text-xs text-muted-foreground">Nephelometric Turbidity Units</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="temperature">Temperature (°C)</Label>
+                        <Input
+                          id="temperature"
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          max="50"
+                          value={formData.temperature}
+                          onChange={(e) => setFormData(prev => ({ ...prev, temperature: e.target.value }))}
+                          placeholder="25.0"
+                        />
+                        <p className="text-xs text-muted-foreground">Water temperature</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Chemical Parameters */}
+                  <div>
+                    <h4 className="font-semibold mb-3 text-primary">Chemical Parameters</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="chlorine">Chlorine (mg/L)</Label>
+                        <Input
+                          id="chlorine"
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="5"
+                          value={formData.chlorine}
+                          onChange={(e) => setFormData(prev => ({ ...prev, chlorine: e.target.value }))}
+                          placeholder="0.5"
+                        />
+                        <p className="text-xs text-muted-foreground">Free chlorine residual</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="fluoride">Fluoride (mg/L)</Label>
+                        <Input
+                          id="fluoride"
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="10"
+                          value={formData.fluoride}
+                          onChange={(e) => setFormData(prev => ({ ...prev, fluoride: e.target.value }))}
+                          placeholder="1.0"
+                        />
+                        <p className="text-xs text-muted-foreground">Fluoride concentration</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="nitrate">Nitrate (mg/L)</Label>
+                        <Input
+                          id="nitrate"
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          max="200"
+                          value={formData.nitrate}
+                          onChange={(e) => setFormData(prev => ({ ...prev, nitrate: e.target.value }))}
+                          placeholder="10.0"
+                        />
+                        <p className="text-xs text-muted-foreground">Nitrate as NO₃</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="hardness">Hardness (mg/L)</Label>
+                        <Input
+                          id="hardness"
+                          type="number"
+                          min="0"
+                          max="1000"
+                          value={formData.hardness}
+                          onChange={(e) => setFormData(prev => ({ ...prev, hardness: e.target.value }))}
+                          placeholder="150"
+                        />
+                        <p className="text-xs text-muted-foreground">Total hardness as CaCO₃</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Heavy Metals */}
+                  <div>
+                    <h4 className="font-semibold mb-3 text-primary">Heavy Metals & Minerals</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="arsenic">Arsenic (mg/L)</Label>
+                        <Input
+                          id="arsenic"
+                          type="number"
+                          step="0.001"
+                          min="0"
+                          max="1"
+                          value={formData.arsenic}
+                          onChange={(e) => setFormData(prev => ({ ...prev, arsenic: e.target.value }))}
+                          placeholder="0.005"
+                        />
+                        <p className="text-xs text-muted-foreground">Arsenic concentration</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="iron">Iron (mg/L)</Label>
+                        <Input
+                          id="iron"
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="5"
+                          value={formData.iron}
+                          onChange={(e) => setFormData(prev => ({ ...prev, iron: e.target.value }))}
+                          placeholder="0.2"
+                        />
+                        <p className="text-xs text-muted-foreground">Iron concentration</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
