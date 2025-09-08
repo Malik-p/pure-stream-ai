@@ -5,43 +5,95 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Map, MapPin, AlertTriangle, Shield, Info, Users } from "lucide-react";
 
 const RiskMap = () => {
-  // Mock data for the map zones
-  const mockZones = [
+  // Madhya Pradesh cities water quality data
+  const mpZones = [
     {
       id: 1,
-      area: "Downtown District",
-      riskLevel: "low",
-      reports: 12,
-      avgPurity: 85,
-      lastUpdate: "2 hours ago",
-      coordinates: [28.6139, 77.2090]
+      area: "Bhopal Central",
+      city: "Bhopal",
+      riskLevel: "medium",
+      reports: 34,
+      avgPurity: 62,
+      lastUpdate: "1 hour ago",
+      coordinates: [23.2599, 77.4126],
+      population: "~500,000 residents"
     },
     {
       id: 2,
-      area: "Industrial Zone",
+      area: "Indore Industrial",
+      city: "Indore", 
       riskLevel: "high",
-      reports: 45,
-      avgPurity: 42,
-      lastUpdate: "30 minutes ago",
-      coordinates: [28.7041, 77.1025]
+      reports: 52,
+      avgPurity: 38,
+      lastUpdate: "45 minutes ago",
+      coordinates: [22.7196, 75.8577],
+      population: "~800,000 residents"
     },
     {
       id: 3,
-      area: "Residential North",
-      riskLevel: "medium",
-      reports: 28,
-      avgPurity: 67,
-      lastUpdate: "1 hour ago",
-      coordinates: [28.7041, 77.2125]
+      area: "Gwalior Fort Area",
+      city: "Gwalior",
+      riskLevel: "low",
+      reports: 18,
+      avgPurity: 76,
+      lastUpdate: "3 hours ago",
+      coordinates: [26.2183, 78.1828],
+      population: "~300,000 residents"
     },
     {
       id: 4,
-      area: "Riverside Area",
+      area: "Ujjain Temple Zone",
+      city: "Ujjain",
+      riskLevel: "medium",
+      reports: 29,
+      avgPurity: 58,
+      lastUpdate: "2 hours ago",
+      coordinates: [23.1765, 75.7885],
+      population: "~200,000 residents"
+    },
+    {
+      id: 5,
+      area: "Jabalpur Cantonment",
+      city: "Jabalpur",
       riskLevel: "low",
-      reports: 8,
+      reports: 15,
+      avgPurity: 72,
+      lastUpdate: "4 hours ago",
+      coordinates: [23.1815, 79.9864],
+      population: "~350,000 residents"
+    },
+    {
+      id: 6,
+      area: "Sagar University Area",
+      city: "Sagar",
+      riskLevel: "high",
+      reports: 41,
+      avgPurity: 35,
+      lastUpdate: "1.5 hours ago",
+      coordinates: [23.8388, 78.7378],
+      population: "~150,000 residents"
+    },
+    {
+      id: 7,
+      area: "Dewas Agricultural Zone",
+      city: "Dewas",
+      riskLevel: "medium",
+      reports: 22,
+      avgPurity: 64,
+      lastUpdate: "6 hours ago",
+      coordinates: [22.9676, 76.0534],
+      population: "~120,000 residents"
+    },
+    {
+      id: 8,
+      area: "Ratlam Railway Junction",
+      city: "Ratlam",
+      riskLevel: "low",
+      reports: 12,
       avgPurity: 78,
-      lastUpdate: "45 minutes ago",
-      coordinates: [28.5355, 77.3910]
+      lastUpdate: "5 hours ago",
+      coordinates: [23.3315, 75.0367],
+      population: "~100,000 residents"
     }
   ];
 
@@ -76,9 +128,11 @@ const RiskMap = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4">Interactive Risk Map</h1>
+          <h1 className="text-3xl lg:text-4xl font-bold gradient-text mb-4">
+            Madhya Pradesh Water Quality Map
+          </h1>
           <p className="text-lg text-muted-foreground">
-            Real-time water quality monitoring across different zones and regions
+            Real-time water quality monitoring across major cities in Madhya Pradesh
           </p>
         </div>
 
@@ -94,70 +148,77 @@ const RiskMap = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Map Placeholder */}
           <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Map className="w-5 h-5" />
-                  <span>Regional Water Quality Map</span>
-                </CardTitle>
-                <CardDescription>
-                  Click on zones to view detailed water quality reports
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="relative aspect-video bg-gradient-secondary rounded-lg border-2 border-dashed border-primary/20 flex items-center justify-center">
-                  <div className="text-center">
-                    <Map className="w-16 h-16 text-primary/50 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-muted-foreground mb-2">
-                      Interactive Map Integration
-                    </h3>
-                    <p className="text-sm text-muted-foreground max-w-md">
-                      Would display real-time water quality zones using Mapbox or Leaflet.js
-                      with colored regions based on safety levels.
-                    </p>
-                    <Button variant="outline" className="mt-4">
-                      Connect Map Service
-                    </Button>
-                  </div>
+          <Card className="card-hover glass-effect">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Map className="w-5 h-5 text-primary" />
+                <span>Madhya Pradesh Water Quality Map</span>
+              </CardTitle>
+              <CardDescription>
+                Click on cities to view detailed water quality reports
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="relative aspect-video bg-gradient-secondary rounded-lg border-2 border-dashed border-primary/20 flex items-center justify-center water-ripple">
+                <div className="text-center">
+                  <Map className="w-16 h-16 text-primary/70 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold gradient-text mb-2">
+                    Interactive MP Cities Map
+                  </h3>
+                  <p className="text-sm text-muted-foreground max-w-md">
+                    Real-time monitoring across Bhopal, Indore, Gwalior, Ujjain, Jabalpur, 
+                    Sagar, Dewas, and Ratlam with color-coded safety zones.
+                  </p>
+                  <Button variant="outline" className="mt-4 hover:shadow-glow transition-all duration-300">
+                    Connect Map Service
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
           </div>
 
           {/* Zone List */}
           <div className="space-y-4">
-            <Card>
+            <Card className="card-hover">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
-                  <MapPin className="w-5 h-5" />
-                  <span>Active Zones</span>
+                  <MapPin className="w-5 h-5 text-primary" />
+                  <span>MP Cities Status</span>
                 </CardTitle>
                 <CardDescription>
-                  Current water quality status by region
+                  Current water quality status across major cities
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {mockZones.map((zone) => (
+                {mpZones.map((zone) => (
                   <div
                     key={zone.id}
-                    className={`p-4 rounded-lg border cursor-pointer hover:shadow-md transition-all ${getRiskBgColor(zone.riskLevel)}`}
+                    className={`p-4 rounded-lg border cursor-pointer hover:shadow-card transition-all duration-300 hover:-translate-y-1 ${getRiskBgColor(zone.riskLevel)}`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold">{zone.area}</h4>
-                      <Badge variant={getRiskBadgeVariant(zone.riskLevel)}>
+                      <div>
+                        <h4 className="font-semibold text-lg">{zone.area}</h4>
+                        <p className="text-sm text-muted-foreground">{zone.city}</p>
+                      </div>
+                      <Badge variant={getRiskBadgeVariant(zone.riskLevel)} className="px-3 py-1">
                         {zone.riskLevel.toUpperCase()}
                       </Badge>
                     </div>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Purity Index:</span>
-                        <span className={`font-medium ${getRiskColor(zone.riskLevel)}`}>
+                        <span className={`font-bold ${getRiskColor(zone.riskLevel)}`}>
                           {zone.avgPurity}/100
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Reports:</span>
                         <span className="font-medium">{zone.reports}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Population:</span>
+                        <span className="font-medium text-xs">{zone.population}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Updated:</span>
@@ -203,31 +264,31 @@ const RiskMap = () => {
 
         {/* Quick Stats */}
         <div className="grid md:grid-cols-4 gap-4 mt-8">
-          <Card>
+          <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <Shield className="w-8 h-8 text-success mx-auto mb-2" />
-              <div className="text-2xl font-bold text-success">2</div>
-              <div className="text-sm text-muted-foreground">Safe Zones</div>
+              <div className="text-2xl font-bold text-success">3</div>
+              <div className="text-sm text-muted-foreground">Safe Cities</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <AlertTriangle className="w-8 h-8 text-warning mx-auto mb-2" />
-              <div className="text-2xl font-bold text-warning">1</div>
-              <div className="text-sm text-muted-foreground">Caution Zones</div>
+              <div className="text-2xl font-bold text-warning">3</div>
+              <div className="text-sm text-muted-foreground">Caution Cities</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <AlertTriangle className="w-8 h-8 text-destructive mx-auto mb-2" />
-              <div className="text-2xl font-bold text-destructive">1</div>
-              <div className="text-sm text-muted-foreground">High Risk Zones</div>
+              <div className="text-2xl font-bold text-destructive">2</div>
+              <div className="text-sm text-muted-foreground">High Risk Cities</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold text-primary">93</div>
+              <div className="text-2xl font-bold gradient-text">233</div>
               <div className="text-sm text-muted-foreground">Total Reports</div>
             </CardContent>
           </Card>

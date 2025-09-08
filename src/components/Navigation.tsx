@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Droplets, Upload, Map, History, Info, AlertTriangle } from "lucide-react";
+import { Menu, Droplets, Upload, Map, History, Info } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +13,6 @@ const Navigation = () => {
     { href: "/upload", label: "Upload Data", icon: Upload },
     { href: "/map", label: "Risk Map", icon: Map },
     { href: "/history", label: "History", icon: History },
-    { href: "/alerts", label: "Alerts", icon: AlertTriangle },
     { href: "/about", label: "About", icon: Info },
   ];
 

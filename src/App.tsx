@@ -9,7 +9,6 @@ import UploadData from "./pages/UploadData";
 import RiskMap from "./pages/RiskMap";
 import History from "./pages/History";
 import About from "./pages/About";
-import Alerts from "./pages/Alerts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,7 +26,6 @@ const App = () => (
           <Route path="/map" element={<RiskMap />} />
           <Route path="/history" element={<History />} />
           <Route path="/about" element={<About />} />
-          <Route path="/alerts" element={<Alerts />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
