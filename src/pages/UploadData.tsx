@@ -87,72 +87,129 @@ const UploadData = () => {
     const hardness = parseFloat(data.hardness) || 0;
     const iron = parseFloat(data.iron) || 0;
     
-    // pH analysis
+    // pH analysis (Optimal: 6.5-8.5)
     if (ph < 6.5 || ph > 8.5) {
       const penalty = Math.min(20, Math.abs(ph - 7.5) * 8);
       score -= penalty;
-      recommendations.push(ph < 6.5 ? "pH too acidic - consider pH balancing" : "pH too alkaline - consider acid neutralization");
+      if (ph < 6.5) {
+        recommendations.push("🔴 ACIDIC WATER DETECTED: pH level is too low. Acidic water can corrode pipes, leach metals, and cause digestive issues. Solution: Install pH balancing system or use alkaline filters.");
+      } else {
+        recommendations.push("🔴 ALKALINE WATER DETECTED: pH level is too high. Can cause skin irritation and bitter taste. Solution: Install acid neutralization system or carbon filters.");
+      }
+    } else {
+      recommendations.push("✅ pH LEVEL EXCELLENT: Your water pH is within the ideal range (6.5-8.5), perfectly balanced for human consumption.");
     }
     
-    // TDS analysis
+    // TDS analysis (Optimal: <500 ppm)
     if (tds > 500) {
       const penalty = Math.min(15, (tds - 500) / 50);
       score -= penalty;
-      recommendations.push("High TDS detected - consider TDS filtration system");
+      if (tds > 1000) {
+        recommendations.push("🔴 EXTREMELY HIGH TDS: Over 1000 ppm indicates excessive dissolved minerals and salts. This can cause kidney stones, digestive issues, and metallic taste. Solution: Install RO (Reverse Osmosis) system immediately.");
+      } else {
+        recommendations.push("🟡 HIGH TDS DETECTED: 500+ ppm indicates elevated dissolved solids. May cause scaling in appliances and affect taste. Solution: Consider TDS reduction filters or RO system.");
+      }
+    } else if (tds < 150) {
+      recommendations.push("⚠️ LOW TDS WARNING: Very low minerals may indicate over-purified water. Consider remineralization for better health benefits.");
+    } else {
+      recommendations.push("✅ TDS LEVEL GOOD: Your water has optimal mineral content for taste and health.");
     }
     
-    // Turbidity analysis
+    // Turbidity analysis (Optimal: <1 NTU, Max acceptable: 5 NTU)
     if (turbidity > 5) {
       const penalty = Math.min(15, (turbidity - 5) * 2);
       score -= penalty;
-      recommendations.push("High turbidity - use sediment filtration");
+      recommendations.push("🔴 HIGH TURBIDITY ALERT: Cloudy water indicates suspended particles, bacteria, or organic matter. This can harbor pathogens and cause illness. Solution: Install sediment filters, UV sterilization, and multi-stage filtration system.");
+    } else if (turbidity > 1) {
+      recommendations.push("🟡 MODERATE TURBIDITY: Slightly cloudy water. May contain particles. Solution: Use sediment pre-filters to improve clarity.");
+    } else {
+      recommendations.push("✅ WATER CLARITY EXCELLENT: Crystal clear water with minimal suspended particles.");
     }
     
-    // Temperature analysis
+    // Temperature analysis (Optimal: 20-25°C)
     if (temperature > 30) {
       const penalty = Math.min(5, temperature - 30);
       score -= penalty;
-      recommendations.push("Water temperature too high - consider cooling");
+      recommendations.push("🟡 HIGH TEMPERATURE: Water above 30°C may taste unpleasant and promote bacterial growth. Solution: Install cooling systems or check plumbing for hot water cross-connections.");
+    } else if (temperature < 15) {
+      recommendations.push("❄️ COLD WATER: Very cold water. Ensure it's not affecting palatability or causing discomfort.");
+    } else {
+      recommendations.push("✅ TEMPERATURE OPTIMAL: Perfect temperature range for drinking water.");
     }
     
-    // Chlorine analysis
-    if (chlorine < 0.2 || chlorine > 1) {
+    // Chlorine analysis (Optimal: 0.2-1.0 mg/L)
+    if (chlorine < 0.2) {
       score -= 10;
-      recommendations.push(chlorine < 0.2 ? "Insufficient chlorination - risk of bacteria" : "Over-chlorinated - reduce chlorine levels");
+      recommendations.push("🔴 INSUFFICIENT DISINFECTION: Chlorine below 0.2 mg/L may not kill harmful bacteria and viruses. Risk of waterborne diseases like cholera, typhoid. Solution: Check with water supplier or add chlorination system.");
+    } else if (chlorine > 1) {
+      score -= 10;
+      recommendations.push("🔴 OVER-CHLORINATED WATER: Excess chlorine (>1 mg/L) causes strong odor, taste issues, and may form harmful byproducts. Solution: Install activated carbon filters to remove excess chlorine.");
+    } else {
+      recommendations.push("✅ CHLORINE LEVEL PERFECT: Adequate disinfection without excess chemical taste or odor.");
     }
     
-    // Fluoride analysis
+    // Fluoride analysis (Optimal: 0.7-1.5 mg/L)
     if (fluoride > 1.5) {
       const penalty = Math.min(15, (fluoride - 1.5) * 5);
       score -= penalty;
-      recommendations.push("Fluoride levels too high - use defluoridation");
+      if (fluoride > 3) {
+        recommendations.push("🔴 DANGEROUS FLUORIDE LEVELS: Over 3 mg/L can cause dental/skeletal fluorosis, especially in children. Solution: Install specialized defluoridation systems immediately - activated alumina or RO.");
+      } else {
+        recommendations.push("🟡 HIGH FLUORIDE: Levels above 1.5 mg/L may cause dental fluorosis (tooth discoloration). Solution: Use defluoridation filters or mix with low-fluoride water.");
+      }
+    } else if (fluoride < 0.5) {
+      recommendations.push("⚠️ LOW FLUORIDE: May increase risk of dental cavities. Consider fluoride supplementation as advised by dentist.");
+    } else {
+      recommendations.push("✅ FLUORIDE OPTIMAL: Perfect level for dental health without risks.");
     }
     
-    // Nitrate analysis
+    // Nitrate analysis (Safe: <50 mg/L, Ideal: <10 mg/L)
     if (nitrate > 50) {
       const penalty = Math.min(15, (nitrate - 50) / 5);
       score -= penalty;
-      recommendations.push("High nitrate levels - consider reverse osmosis");
+      recommendations.push("🔴 DANGEROUS NITRATE LEVELS: Over 50 mg/L can cause methemoglobinemia (blue baby syndrome) in infants and is linked to cancer. Source: Agricultural runoff, sewage. Solution: Install RO system or ion exchange filters immediately.");
+    } else if (nitrate > 10) {
+      recommendations.push("🟡 ELEVATED NITRATES: Levels above 10 mg/L indicate contamination from fertilizers or organic waste. Solution: Consider RO filtration or monitor source.");
+    } else {
+      recommendations.push("✅ NITRATE LEVELS SAFE: No contamination from agricultural or sewage sources detected.");
     }
     
-    // Arsenic analysis
+    // Arsenic analysis (Safe: <0.01 mg/L)
     if (arsenic > 0.01) {
       score -= 20;
-      recommendations.push("Arsenic contamination detected - immediate treatment required");
+      if (arsenic > 0.05) {
+        recommendations.push("🚨 CRITICAL ARSENIC CONTAMINATION: Levels above 0.05 mg/L are extremely dangerous - can cause cancer, skin lesions, cardiovascular disease. STOP DRINKING IMMEDIATELY. Solution: Professional remediation required - specialized arsenic removal systems.");
+      } else {
+        recommendations.push("🔴 ARSENIC CONTAMINATION DETECTED: Even low levels (>0.01 mg/L) are carcinogenic with long-term exposure. Common in groundwater. Solution: Install arsenic-specific removal systems (iron-based media) or switch to alternate source.");
+      }
+    } else {
+      recommendations.push("✅ ARSENIC LEVELS SAFE: No carcinogenic arsenic contamination detected.");
     }
     
-    // Hardness analysis
+    // Hardness analysis (Soft: <75, Moderate: 75-150, Hard: 150-300, Very Hard: >300 mg/L)
     if (hardness > 300) {
       const penalty = Math.min(10, (hardness - 300) / 20);
       score -= penalty;
-      recommendations.push("Very hard water - consider water softening");
+      recommendations.push("🔴 VERY HARD WATER: Over 300 mg/L causes severe scaling in pipes, appliances breakdown, soap scum, dry skin/hair, and increased soap consumption. Solution: Install ion-exchange water softener system.");
+    } else if (hardness > 150) {
+      recommendations.push("🟡 HARD WATER: 150-300 mg/L causes moderate scaling and soap efficiency issues. Solution: Consider water softening system for better appliance life and cleaning.");
+    } else if (hardness < 75) {
+      recommendations.push("💧 SOFT WATER: Low hardness may be too soft, potentially leaching minerals from pipes. Monitor for metallic taste.");
+    } else {
+      recommendations.push("✅ WATER HARDNESS IDEAL: Perfect mineral balance for household use and taste.");
     }
     
-    // Iron analysis
+    // Iron analysis (Safe: <0.3 mg/L)
     if (iron > 0.3) {
       const penalty = Math.min(10, (iron - 0.3) * 10);
       score -= penalty;
-      recommendations.push("High iron content - use iron removal filter");
+      if (iron > 1) {
+        recommendations.push("🔴 HIGH IRON CONTAMINATION: Over 1 mg/L causes severe metallic taste, red/brown staining, and may support bacterial growth. Solution: Install iron removal filters (oxidation + filtration) or aeration systems.");
+      } else {
+        recommendations.push("🟡 ELEVATED IRON: 0.3-1.0 mg/L causes metallic taste and slight staining. Solution: Use iron removal filters or oxidizing filters.");
+      }
+    } else {
+      recommendations.push("✅ IRON LEVELS NORMAL: No metallic taste or staining issues.");
     }
     
     // Impurities analysis

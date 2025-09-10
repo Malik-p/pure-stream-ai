@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Map, MapPin, AlertTriangle, Shield, Info, Users } from "lucide-react";
+import IndoreMap from "@/components/IndoreMap";
 
 const RiskMap = () => {
   // Madhya Pradesh cities water quality data
@@ -146,36 +147,9 @@ const RiskMap = () => {
         </Alert>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Map Placeholder */}
+          {/* Indore Water Bodies Map */}
           <div className="lg:col-span-2">
-          <Card className="card-hover glass-effect">
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <Map className="w-5 h-5 text-primary" />
-                <span>Madhya Pradesh Water Quality Map</span>
-              </CardTitle>
-              <CardDescription>
-                Click on cities to view detailed water quality reports
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="relative aspect-video bg-gradient-secondary rounded-lg border-2 border-dashed border-primary/20 flex items-center justify-center water-ripple">
-                <div className="text-center">
-                  <Map className="w-16 h-16 text-primary/70 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold gradient-text mb-2">
-                    Interactive MP Cities Map
-                  </h3>
-                  <p className="text-sm text-muted-foreground max-w-md">
-                    Real-time monitoring across Bhopal, Indore, Gwalior, Ujjain, Jabalpur, 
-                    Sagar, Dewas, and Ratlam with color-coded safety zones.
-                  </p>
-                  <Button variant="outline" className="mt-4 hover:shadow-glow transition-all duration-300">
-                    Connect Map Service
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            <IndoreMap />
           </div>
 
           {/* Zone List */}

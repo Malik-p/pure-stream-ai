@@ -23,11 +23,11 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 scale-on-hover group">
-            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center pulse-glow group-hover:rotate-12 transition-all duration-300">
+          <Link to="/" className="flex items-center space-x-2 gentle-hover group">
+            <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center subtle-glow">
               <Droplets className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold gradient-text group-hover:scale-105 transition-transform duration-300">
+            <span className="text-xl font-bold gradient-text">
               AquaScan
             </span>
           </Link>
@@ -40,16 +40,14 @@ const Navigation = () => {
                 variant={isActive(href) ? "default" : "ghost"}
                 asChild
                 size="sm"
-                className={`scale-on-hover transition-all duration-300 ${
+                className={`gentle-hover transition-all duration-300 ${
                   isActive(href) 
-                    ? "pulse-glow shadow-glow" 
-                    : "hover:shadow-card hover:bg-primary/10"
+                    ? "bg-primary text-primary-foreground" 
+                    : "hover:bg-primary/10"
                 }`}
               >
                 <Link to={href} className="flex items-center space-x-2 group">
-                  <Icon className={`w-4 h-4 transition-transform duration-300 ${
-                    isActive(href) ? "bounce-gentle" : "group-hover:scale-110"
-                  }`} />
+                  <Icon className="w-4 h-4 transition-transform duration-300 group-hover:scale-105" />
                   <span className="group-hover:gradient-text transition-all duration-300">{label}</span>
                 </Link>
               </Button>
