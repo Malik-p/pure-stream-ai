@@ -180,7 +180,7 @@
   }
   
   .gentle-hover {
-    @apply transition-all duration-300 hover:scale-102;
+    @apply transition-all duration-300 hover:scale-105;
   }
   
   .subtle-glow {
