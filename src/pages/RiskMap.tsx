@@ -156,8 +156,252 @@ const RiskMap = () => {
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Indore Water Bodies Map */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-6">
             <IndoreMap />
+            
+            {/* Water Quality Trends */}
+            <Card className="card-hover glass-effect">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Map className="w-5 h-5 text-primary" />
+                  <span>Water Quality Trends</span>
+                </CardTitle>
+                <CardDescription>
+                  Monthly water quality index changes across major areas
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  <div className="text-center p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                    <div className="text-2xl font-bold text-destructive">28</div>
+                    <div className="text-xs text-muted-foreground">Industrial Zone</div>
+                    <div className="text-xs text-destructive">↓ -12 pts</div>
+                  </div>
+                  <div className="text-center p-3 rounded-lg bg-warning/10 border border-warning/20">
+                    <div className="text-2xl font-bold text-warning">58</div>
+                    <div className="text-xs text-muted-foreground">Bilawali Tank</div>
+                    <div className="text-xs text-warning">↑ +5 pts</div>
+                  </div>
+                  <div className="text-center p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+                    <div className="text-2xl font-bold text-destructive">34</div>
+                    <div className="text-xs text-muted-foreground">Mhow Tehsil</div>
+                    <div className="text-xs text-destructive">↓ -8 pts</div>
+                  </div>
+                  <div className="text-center p-3 rounded-lg bg-success/10 border border-success/20">
+                    <div className="text-2xl font-bold text-success">74</div>
+                    <div className="text-xs text-muted-foreground">Rau Area</div>
+                    <div className="text-xs text-success">↑ +3 pts</div>
+                  </div>
+                </div>
+                
+                {/* Simple trend visualization */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Industrial Pollution Impact</span>
+                    <div className="flex-1 mx-4 h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-destructive via-warning to-success w-3/4"></div>
+                    </div>
+                    <span className="text-xs text-destructive">High</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Seasonal Variation</span>
+                    <div className="flex-1 mx-4 h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-warning to-success w-1/2"></div>
+                    </div>
+                    <span className="text-xs text-warning">Medium</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">Infrastructure Quality</span>
+                    <div className="flex-1 mx-4 h-2 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-destructive via-warning to-success w-1/3"></div>
+                    </div>
+                    <span className="text-xs text-destructive">Poor</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Contamination Sources Flow */}
+            <Card className="card-hover glass-effect">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <AlertTriangle className="w-5 h-5 text-warning" />
+                  <span>Contamination Sources & Impact Flow</span>
+                </CardTitle>
+                <CardDescription>
+                  How pollution sources affect water quality in Indore
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="relative">
+                  {/* Flow diagram */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Sources */}
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-center text-destructive">Pollution Sources</h4>
+                      <div className="space-y-3">
+                        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
+                          <div className="font-medium text-sm">Industrial Discharge</div>
+                          <div className="text-xs text-muted-foreground">No proper drainage</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-warning/10 border border-warning/20 text-center">
+                          <div className="font-medium text-sm">Agricultural Runoff</div>
+                          <div className="text-xs text-muted-foreground">Pesticides & fertilizers</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
+                          <div className="font-medium text-sm">Urban Waste</div>
+                          <div className="text-xs text-muted-foreground">Sewage & solid waste</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Impact */}
+                    <div className="space-y-4 relative">
+                      <h4 className="font-semibold text-center text-warning">Impact Areas</h4>
+                      <div className="absolute top-8 left-0 right-0 flex justify-center">
+                        <div className="w-16 h-0.5 bg-gradient-to-r from-destructive to-warning"></div>
+                      </div>
+                      <div className="space-y-3 mt-6">
+                        <div className="p-3 rounded-lg bg-warning/10 border border-warning/20 text-center">
+                          <div className="font-medium text-sm">Surface Water</div>
+                          <div className="text-xs text-muted-foreground">Rivers & Lakes</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
+                          <div className="font-medium text-sm">Groundwater</div>
+                          <div className="text-xs text-muted-foreground">Wells & Aquifers</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-warning/10 border border-warning/20 text-center">
+                          <div className="font-medium text-sm">Tap Water Supply</div>
+                          <div className="text-xs text-muted-foreground">Municipal distribution</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Health Impact */}
+                    <div className="space-y-4 relative">
+                      <h4 className="font-semibold text-center text-destructive">Health Impact</h4>
+                      <div className="absolute top-8 left-0 right-0 flex justify-center">
+                        <div className="w-16 h-0.5 bg-gradient-to-r from-warning to-destructive"></div>
+                      </div>
+                      <div className="space-y-3 mt-6">
+                        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
+                          <div className="font-medium text-sm">Waterborne Diseases</div>
+                          <div className="text-xs text-muted-foreground">Cholera, Typhoid</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-warning/10 border border-warning/20 text-center">
+                          <div className="font-medium text-sm">Chemical Exposure</div>
+                          <div className="text-xs text-muted-foreground">Heavy metals, toxins</div>
+                        </div>
+                        <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
+                          <div className="font-medium text-sm">Long-term Effects</div>
+                          <div className="text-xs text-muted-foreground">Cancer, organ damage</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Water Parameters Breakdown */}
+            <Card className="card-hover glass-effect">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Info className="w-5 h-5 text-primary" />
+                  <span>Critical Parameters Analysis</span>
+                </CardTitle>
+                <CardDescription>
+                  Key water quality indicators exceeding safe limits
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-warning">Physicochemical Parameters</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">pH Level</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-destructive/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-destructive w-4/5"></div>
+                          </div>
+                          <span className="text-xs text-destructive">High</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">TDS (Total Dissolved Solids)</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-warning/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-warning w-3/5"></div>
+                          </div>
+                          <span className="text-xs text-warning">Medium</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">Turbidity</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-destructive/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-destructive w-4/5"></div>
+                          </div>
+                          <span className="text-xs text-destructive">High</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">Hardness</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-warning/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-warning w-2/3"></div>
+                          </div>
+                          <span className="text-xs text-warning">Medium</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-destructive">Chemical Contaminants</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">Nitrates</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-destructive/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-destructive w-full"></div>
+                          </div>
+                          <span className="text-xs text-destructive">Critical</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">Heavy Metals</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-warning/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-warning w-3/5"></div>
+                          </div>
+                          <span className="text-xs text-warning">Medium</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">Bacterial Count</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-destructive/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-destructive w-4/5"></div>
+                          </div>
+                          <span className="text-xs text-destructive">High</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-muted/30">
+                        <span className="text-sm">Industrial Chemicals</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-16 h-2 bg-destructive/20 rounded-full overflow-hidden">
+                            <div className="h-full bg-destructive w-3/4"></div>
+                          </div>
+                          <span className="text-xs text-destructive">High</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
           {/* Zone List */}
