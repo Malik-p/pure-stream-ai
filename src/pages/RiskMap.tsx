@@ -138,7 +138,7 @@ const RiskMap = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl lg:text-4xl font-bold gradient-text mb-4">
-            🏙️ Indore & Surrounding Areas Water Quality Map
+             Indore & Surrounding Areas Water Quality Map
           </h1>
           <p className="text-lg text-muted-foreground">
             Real-time water quality monitoring across Indore city and its surrounding regions
@@ -146,13 +146,13 @@ const RiskMap = () => {
         </div>
 
         {/* Map Integration Notice */}
-        <Alert className="mb-8">
+{/*         <Alert className="mb-8">
           <Info className="h-4 w-4" />
           <AlertDescription>
             <strong>Note:</strong> Interactive map integration requires backend setup. 
             This demo shows the data structure and UI components that would be populated by a real mapping service.
           </AlertDescription>
-        </Alert>
+        </Alert> */}
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Indore Water Bodies Map */}
