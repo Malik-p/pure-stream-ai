@@ -6,95 +6,103 @@ import { Map, MapPin, AlertTriangle, Shield, Info, Users } from "lucide-react";
 import IndoreMap from "@/components/IndoreMap";
 
 const RiskMap = () => {
-  // Madhya Pradesh cities water quality data
-  const mpZones = [
+  // Indore and surrounding areas water quality data
+  const indoreAreas = [
     {
       id: 1,
-      area: "Bhopal Central",
-      city: "Bhopal",
-      riskLevel: "medium",
-      reports: 34,
-      avgPurity: 62,
-      lastUpdate: "1 hour ago",
-      coordinates: [23.2599, 77.4126],
-      population: "~500,000 residents"
+      area: "Indore Central",
+      city: "Indore",
+      riskLevel: "high",
+      reports: 45,
+      avgPurity: 32,
+      lastUpdate: "30 minutes ago",
+      coordinates: [22.7196, 75.8577],
+      population: "~400,000 residents",
+      description: "Groundwater WQI: 25-50 (Poor quality). Industrial contamination concerns."
     },
     {
       id: 2,
-      area: "Indore Industrial",
-      city: "Indore", 
-      riskLevel: "high",
-      reports: 52,
-      avgPurity: 38,
-      lastUpdate: "45 minutes ago",
-      coordinates: [22.7196, 75.8577],
-      population: "~800,000 residents"
+      area: "Bilawali Tank Area",
+      city: "Indore",
+      riskLevel: "medium",
+      reports: 28,
+      avgPurity: 58,
+      lastUpdate: "1 hour ago",
+      coordinates: [22.7503, 75.8937],
+      population: "~200,000 residents",
+      description: "Surface water with seasonal variations. Nitrate levels fluctuate affecting WQI."
     },
     {
       id: 3,
-      area: "Gwalior Fort Area",
-      city: "Gwalior",
-      riskLevel: "low",
-      reports: 18,
-      avgPurity: 76,
-      lastUpdate: "3 hours ago",
-      coordinates: [26.2183, 78.1828],
-      population: "~300,000 residents"
+      area: "Indore Industrial Zone",
+      city: "Indore",
+      riskLevel: "high",
+      reports: 52,
+      avgPurity: 28,
+      lastUpdate: "45 minutes ago",
+      coordinates: [22.6708, 75.9063],
+      population: "~300,000 residents",
+      description: "No proper drainage system. High contamination risk for surface & groundwater."
     },
     {
       id: 4,
-      area: "Ujjain Temple Zone",
-      city: "Ujjain",
-      riskLevel: "medium",
-      reports: 29,
-      avgPurity: 58,
+      area: "Mhow Tehsil - Sangi Street",
+      city: "Mhow",
+      riskLevel: "high",
+      reports: 18,
+      avgPurity: 34,
       lastUpdate: "2 hours ago",
-      coordinates: [23.1765, 75.7885],
-      population: "~200,000 residents"
+      coordinates: [22.5533, 75.7606],
+      population: "~50,000 residents",
+      description: "Tap water exceeds permissible limits for multiple physicochemical parameters."
     },
     {
       id: 5,
-      area: "Jabalpur Cantonment",
-      city: "Jabalpur",
-      riskLevel: "low",
+      area: "Mhow - Raj Mohalla",
+      city: "Mhow",
+      riskLevel: "medium",
       reports: 15,
-      avgPurity: 72,
-      lastUpdate: "4 hours ago",
-      coordinates: [23.1815, 79.9864],
-      population: "~350,000 residents"
+      avgPurity: 48,
+      lastUpdate: "3 hours ago",
+      coordinates: [22.5467, 75.7642],
+      population: "~30,000 residents",
+      description: "Seasonal study shows bacteriological concerns in tap water supply."
     },
     {
       id: 6,
-      area: "Sagar University Area",
-      city: "Sagar",
-      riskLevel: "high",
-      reports: 41,
-      avgPurity: 35,
-      lastUpdate: "1.5 hours ago",
-      coordinates: [23.8388, 78.7378],
-      population: "~150,000 residents"
+      area: "Mhow Cantonment Board",
+      city: "Mhow",
+      riskLevel: "medium",
+      reports: 22,
+      avgPurity: 55,
+      lastUpdate: "4 hours ago",
+      coordinates: [22.5589, 75.7544],
+      population: "~40,000 residents",
+      description: "Military area with better infrastructure but still faces water quality challenges."
     },
     {
       id: 7,
-      area: "Dewas Agricultural Zone",
-      city: "Dewas",
+      area: "Depalpur",
+      city: "Depalpur",
       riskLevel: "medium",
-      reports: 22,
-      avgPurity: 64,
-      lastUpdate: "6 hours ago",
-      coordinates: [22.9676, 76.0534],
-      population: "~120,000 residents"
+      reports: 12,
+      avgPurity: 61,
+      lastUpdate: "5 hours ago",
+      coordinates: [22.8503, 75.5417],
+      population: "~25,000 residents",
+      description: "Agricultural runoff affects groundwater quality in rural areas."
     },
     {
       id: 8,
-      area: "Ratlam Railway Junction",
-      city: "Ratlam",
+      area: "Rau",
+      city: "Rau",
       riskLevel: "low",
-      reports: 12,
-      avgPurity: 78,
-      lastUpdate: "5 hours ago",
-      coordinates: [23.3315, 75.0367],
-      population: "~100,000 residents"
+      reports: 8,
+      avgPurity: 74,
+      lastUpdate: "6 hours ago",
+      coordinates: [22.6794, 75.7206],
+      population: "~20,000 residents",
+      description: "Suburban area with relatively better water quality due to less industrial activity."
     }
   ];
 
@@ -130,10 +138,10 @@ const RiskMap = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-3xl lg:text-4xl font-bold gradient-text mb-4">
-            Madhya Pradesh Water Quality Map
+            🏙️ Indore & Surrounding Areas Water Quality Map
           </h1>
           <p className="text-lg text-muted-foreground">
-            Real-time water quality monitoring across major cities in Madhya Pradesh
+            Real-time water quality monitoring across Indore city and its surrounding regions
           </p>
         </div>
 
@@ -158,45 +166,48 @@ const RiskMap = () => {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <MapPin className="w-5 h-5 text-primary" />
-                  <span>MP Cities Status</span>
+                  <span>Indore Areas Status</span>
                 </CardTitle>
                 <CardDescription>
-                  Current water quality status across major cities
+                  Water quality status across Indore and surrounding areas
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {mpZones.map((zone) => (
+                {indoreAreas.map((area) => (
                   <div
-                    key={zone.id}
-                    className={`p-4 rounded-lg border cursor-pointer hover:shadow-card transition-all duration-300 hover:-translate-y-1 ${getRiskBgColor(zone.riskLevel)}`}
+                    key={area.id}
+                    className={`p-4 rounded-lg border cursor-pointer hover:shadow-card transition-all duration-300 hover:-translate-y-1 ${getRiskBgColor(area.riskLevel)}`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <h4 className="font-semibold text-lg">{zone.area}</h4>
-                        <p className="text-sm text-muted-foreground">{zone.city}</p>
+                        <h4 className="font-semibold text-lg">{area.area}</h4>
+                        <p className="text-sm text-muted-foreground">{area.city}</p>
                       </div>
-                      <Badge variant={getRiskBadgeVariant(zone.riskLevel)} className="px-3 py-1">
-                        {zone.riskLevel.toUpperCase()}
+                      <Badge variant={getRiskBadgeVariant(area.riskLevel)} className="px-3 py-1">
+                        {area.riskLevel.toUpperCase()}
                       </Badge>
+                    </div>
+                    <div className="mb-3">
+                      <p className="text-xs text-muted-foreground italic">{area.description}</p>
                     </div>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Purity Index:</span>
-                        <span className={`font-bold ${getRiskColor(zone.riskLevel)}`}>
-                          {zone.avgPurity}/100
+                        <span className="text-muted-foreground">WQI Score:</span>
+                        <span className={`font-bold ${getRiskColor(area.riskLevel)}`}>
+                          {area.avgPurity}/100
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Reports:</span>
-                        <span className="font-medium">{zone.reports}</span>
+                        <span className="font-medium">{area.reports}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Population:</span>
-                        <span className="font-medium text-xs">{zone.population}</span>
+                        <span className="font-medium text-xs">{area.population}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Updated:</span>
-                        <span className="font-medium">{zone.lastUpdate}</span>
+                        <span className="font-medium">{area.lastUpdate}</span>
                       </div>
                     </div>
                   </div>
@@ -241,28 +252,28 @@ const RiskMap = () => {
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <Shield className="w-8 h-8 text-success mx-auto mb-2" />
-              <div className="text-2xl font-bold text-success">3</div>
-              <div className="text-sm text-muted-foreground">Safe Cities</div>
+              <div className="text-2xl font-bold text-success">1</div>
+              <div className="text-sm text-muted-foreground">Safe Areas</div>
             </CardContent>
           </Card>
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <AlertTriangle className="w-8 h-8 text-warning mx-auto mb-2" />
-              <div className="text-2xl font-bold text-warning">3</div>
-              <div className="text-sm text-muted-foreground">Caution Cities</div>
+              <div className="text-2xl font-bold text-warning">4</div>
+              <div className="text-sm text-muted-foreground">Caution Areas</div>
             </CardContent>
           </Card>
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <AlertTriangle className="w-8 h-8 text-destructive mx-auto mb-2" />
-              <div className="text-2xl font-bold text-destructive">2</div>
-              <div className="text-sm text-muted-foreground">High Risk Cities</div>
+              <div className="text-2xl font-bold text-destructive">3</div>
+              <div className="text-sm text-muted-foreground">High Risk Areas</div>
             </CardContent>
           </Card>
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold gradient-text">233</div>
+              <div className="text-2xl font-bold gradient-text">200</div>
               <div className="text-sm text-muted-foreground">Total Reports</div>
             </CardContent>
           </Card>
