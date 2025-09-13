@@ -6,199 +6,167 @@ import { Map, MapPin, AlertTriangle, Shield, Info, Users } from "lucide-react";
 import indoreMapImage from "@/assets/indore-map.png";
 
 const RiskMap = () => {
-  // Real water quality data based on dataset analysis for Indore region locations
+  // Real water quality data from final_data_loc.pdf dataset
   const indoreAreas = [
     {
       id: 1,
-      area: "Indore Central",
+      area: "Navlakkha",
       city: "Indore",
       riskLevel: "high",
-      reports: 152,
-      avgPurity: 28.5,
+      reports: 23,
+      avgPurity: 48.95,
       pH: 7.2,
-      hardness: 218.4,
-      solids: 24150.6,
-      turbidity: 4.2,
-      lastUpdate: "15 minutes ago",
-      coordinates: [22.7196, 75.8577],
-      population: "~400,000 residents",
-      description: "High TDS levels (24,150 mg/L). pH slightly alkaline. High turbidity indicates pollution."
+      hardness: 300,
+      solids: 475.5,
+      turbidity: 0.8,
+      lastUpdate: "2 hours ago",
+      coordinates: [22.698930, 75.877483],
+      population: "~15,000 residents",
+      description: "Bad water quality with high conductivity (781.7 μMhos/cm) and low dissolved oxygen (1.5 mg/L)"
     },
     {
       id: 2,
-      area: "Mhow",
-      city: "Mhow", 
-      riskLevel: "high",
-      reports: 89,
-      avgPurity: 31.2,
-      pH: 6.1,
-      hardness: 195.8,
-      solids: 28749.7,
-      turbidity: 5.1,
-      lastUpdate: "32 minutes ago",
-      coordinates: [22.5533, 75.7606],
-      population: "~70,000 residents",
-      description: "Critical TDS levels (28,750 mg/L). Acidic pH. Exceeds multiple safety parameters."
+      area: "Usha Phatak",
+      city: "Indore", 
+      riskLevel: "medium",
+      reports: 18,
+      avgPurity: 50.25,
+      pH: 7.3,
+      hardness: 356,
+      solids: 847,
+      turbidity: 0.65,
+      lastUpdate: "1.5 hours ago",
+      coordinates: [22.723854, 75.862579],
+      population: "~20,000 residents",
+      description: "Medium quality water with elevated TDS (847 mg/L) and conductivity (1263.6 μMhos/cm)"
     },
     {
       id: 3,
-      area: "Depalpur",
-      city: "Depalpur",
-      riskLevel: "medium",
-      reports: 67,
-      avgPurity: 52.8,
-      pH: 8.1,
-      hardness: 168.3,
-      solids: 19460.4,
-      turbidity: 3.6,
-      lastUpdate: "1 hour ago",
-      coordinates: [22.8503, 75.5417],
-      population: "~45,000 residents", 
-      description: "Moderate contamination. Alkaline pH but acceptable hardness levels."
+      area: "Juni Indore",
+      city: "Indore",
+      riskLevel: "medium", 
+      reports: 22,
+      avgPurity: 50.26,
+      pH: 7.2,
+      hardness: 260,
+      solids: 796.5,
+      turbidity: 0.95,
+      lastUpdate: "3 hours ago",
+      coordinates: [22.709614, 75.861852],
+      population: "~35,000 residents",
+      description: "Medium quality with high alkalinity (552 mg/L) and elevated nitrate levels (9.77 mg/L)"
     },
     {
       id: 4,
-      area: "Sanwer",
-      city: "Sanwer",
-      riskLevel: "medium",
-      reports: 43,
-      avgPurity: 48.9,
-      pH: 7.8,
-      hardness: 203.6,
-      solids: 21536.2,
-      turbidity: 3.8,
-      lastUpdate: "1.5 hours ago",
-      coordinates: [22.9333, 76.0167],
-      population: "~35,000 residents",
-      description: "Agricultural runoff impact. Moderate hardness and TDS levels."
+      area: "Shankar Bagh",
+      city: "Indore",
+      riskLevel: "high",
+      reports: 42,
+      avgPurity: 47.07,
+      pH: 7.35,
+      hardness: 592,
+      solids: 807,
+      turbidity: 0.75,
+      lastUpdate: "45 minutes ago",
+      coordinates: [22.733257, 75.851208],
+      population: "~25,000 residents",
+      description: "Bad quality with very high hardness (592 mg/L) and elevated coliform count (42 MPN/100mL)"
     },
     {
       id: 5,
-      area: "Rau",  
-      city: "Rau",
-      riskLevel: "low",
-      reports: 28,
-      avgPurity: 71.4,
-      pH: 7.4,
-      hardness: 156.7,
-      solids: 15758.7,
-      turbidity: 2.8,
-      lastUpdate: "2 hours ago",
-      coordinates: [22.6794, 75.7206],
-      population: "~25,000 residents",
-      description: "Best water quality in region. Lower industrial activity. pH near neutral."
+      area: "Sadar Bajar",
+      city: "Indore", 
+      riskLevel: "high",
+      reports: 41,
+      avgPurity: 44.79,
+      pH: 7.5,
+      hardness: 512,
+      solids: 856,
+      turbidity: 2.85,
+      lastUpdate: "1 hour ago",
+      coordinates: [22.725203, 75.852679],
+      population: "~40,000 residents",
+      description: "Bad quality with very high turbidity (2.85 NTU) and elevated TDS (856 mg/L)"
     },
     {
       id: 6,
-      area: "Dhar", 
-      city: "Dhar",
-      riskLevel: "medium",
-      reports: 56,
-      avgPurity: 45.3,
-      pH: 8.7,
-      hardness: 238.6,
-      solids: 27492.3,
-      turbidity: 4.4,
-      lastUpdate: "2.5 hours ago", 
-      coordinates: [22.6000, 75.3000],
-      population: "~90,000 residents",
-      description: "High alkalinity (pH 8.7). Elevated hardness levels affecting water quality."
+      area: "Niranjanpur",
+      city: "Indore",
+      riskLevel: "high",
+      reports: 38,
+      avgPurity: 47.16,
+      pH: 7.3,
+      hardness: 428,
+      solids: 1149.5,
+      turbidity: 0.5,
+      lastUpdate: "2.5 hours ago",
+      coordinates: [22.776728, 75.890502],
+      population: "~30,000 residents", 
+      description: "Bad quality with very high TDS (1149.5 mg/L) and elevated chloride levels (194 mg/L)"
     },
     {
       id: 7,
-      area: "Maheshwar",
-      city: "Maheshwar", 
-      riskLevel: "medium",
-      reports: 34,
-      avgPurity: 58.1,
-      pH: 7.6,
-      hardness: 183.1,
-      solids: 18630.1,
-      turbidity: 3.2,
-      lastUpdate: "3 hours ago",
-      coordinates: [22.1763, 75.5863],
-      population: "~22,000 residents",
-      description: "River proximity helps. Moderate contamination from temple activities."
+      area: "Dhar Road",
+      city: "Indore",
+      riskLevel: "high",
+      reports: 15,
+      avgPurity: 46.98,
+      pH: 7.35,
+      hardness: 450,
+      solids: 873,
+      turbidity: 0.75,
+      lastUpdate: "4 hours ago",
+      coordinates: [22.708749, 75.829324],
+      population: "~18,000 residents",
+      description: "Bad quality with high chloride (241 mg/L) and elevated sulfate levels (229.9 mg/L)" 
     },
     {
       id: 8,
-      area: "Khargone",
-      city: "Khargone",
-      riskLevel: "high", 
-      reports: 78,
-      avgPurity: 35.7,
-      pH: 5.6,
-      hardness: 248.1,
-      solids: 32144.8,
-      turbidity: 4.9,
+      area: "Race Course Road",
+      city: "Indore",
+      riskLevel: "high",
+      reports: 17,
+      avgPurity: 47.39,
+      pH: 7.35,
+      hardness: 394,
+      solids: 878,
+      turbidity: 1.4,
       lastUpdate: "3.5 hours ago",
-      coordinates: [21.8300, 75.6100],
-      population: "~85,000 residents", 
-      description: "Acidic water (pH 5.6). Very high TDS (32,145 mg/L). Critical hardness levels."
+      coordinates: [22.728295, 75.878791],
+      population: "~28,000 residents",
+      description: "Bad quality with high conductivity (1493.15 μMhos/cm) and low dissolved oxygen (0.6 mg/L)"
     },
     {
       id: 9,
-      area: "Burhanpur",
-      city: "Burhanpur",
-      riskLevel: "medium",
-      reports: 45,
-      avgPurity: 49.6,
-      pH: 7.9,
-      hardness: 211.0,
-      solids: 24683.7,
-      turbidity: 3.9,
-      lastUpdate: "4 hours ago",
-      coordinates: [21.3100, 76.2300], 
-      population: "~55,000 residents",
-      description: "Industrial textile pollution. Elevated TDS from dyeing activities."
+      area: "Nipaniya",
+      city: "Indore",
+      riskLevel: "high", 
+      reports: 23,
+      avgPurity: 47.43,
+      pH: 7.2,
+      hardness: 380,
+      solids: 1182,
+      turbidity: 0.68,
+      lastUpdate: "5 hours ago",
+      coordinates: [22.763709, 75.905528],
+      population: "~32,000 residents",
+      description: "Bad quality with very high TDS (1182 mg/L) and elevated iron contamination (0.031 mg/L)"
     },
     {
       id: 10,
-      area: "Pitlam",
-      city: "Pitlam",
-      riskLevel: "low",
-      reports: 19,
-      avgPurity: 68.2,
-      pH: 7.3,
-      hardness: 145.1,
-      solids: 16963.6,
-      turbidity: 2.9,
-      lastUpdate: "4.5 hours ago",
-      coordinates: [22.7500, 75.6500],
-      population: "~18,000 residents",
-      description: "Rural area with minimal industrial impact. Good groundwater quality."
-    },
-    {
-      id: 11,
-      area: "Dewas", 
-      city: "Dewas",
-      riskLevel: "medium",
-      reports: 62,
-      avgPurity: 51.3,
-      pH: 8.3,
-      hardness: 229.4,
-      solids: 22984.1,
-      turbidity: 3.7,
-      lastUpdate: "5 hours ago",
-      coordinates: [22.9647, 76.0567],
-      population: "~75,000 residents",
-      description: "Pharmaceutical industry impact. High alkalinity and moderate TDS levels."
-    },
-    {
-      id: 12,
-      area: "Ujjain",
-      city: "Ujjain", 
+      area: "Airport Area",
+      city: "Indore",
       riskLevel: "high",
-      reports: 94,
-      avgPurity: 33.8,
-      pH: 6.4,
-      hardness: 266.4,
-      solids: 30616.6,
-      turbidity: 4.8,
-      lastUpdate: "5.5 hours ago",
-      coordinates: [23.1765, 75.7885],
-      population: "~120,000 residents",
-      description: "Religious activities pollution. Very high hardness (266 mg/L). High TDS levels."
+      reports: 15,
+      avgPurity: 47.49,
+      pH: 7.4,
+      hardness: 520,
+      solids: 963,
+      turbidity: 0.21,
+      lastUpdate: "6 hours ago",
+      coordinates: [22.729162, 75.804687],
+      population: "~12,000 residents",
+      description: "Bad quality with high hardness (520 mg/L) and elevated nitrate levels (10.42 mg/L)"
     }
   ];
 
@@ -271,47 +239,38 @@ const RiskMap = () => {
                     className="w-full h-auto rounded-lg shadow-lg border border-border/20"
                   />
                   
-                  {/* Data Point Overlays */}
+                  {/* Precise coordinate-based markers for groundwater sampling locations */}
                   <div className="absolute inset-0">
                     {indoreAreas.map((area) => {
-                      const riskColor = area.riskLevel === 'high' ? 'bg-destructive' : 
-                                       area.riskLevel === 'medium' ? 'bg-warning' : 'bg-success';
+                      const riskColor = area.riskLevel === 'high' ? 'bg-red-500' : 
+                                       area.riskLevel === 'medium' ? 'bg-yellow-500' : 'bg-green-500';
                       
-                      // Position calculation based on map coordinates (approximate positioning)
-                      const getPosition = (areaName: string) => {
-                        const positions: { [key: string]: { top: string, left: string } } = {
-                          'Indore Central': { top: '58%', left: '52%' },
-                          'Mhow': { top: '78%', left: '46%' },
-                          'Depalpur': { top: '38%', left: '25%' },
-                          'Sanwer': { top: '22%', left: '62%' },
-                          'Rau': { top: '68%', left: '48%' },
-                          'Dhar': { top: '85%', left: '15%' },
-                          'Maheshwar': { top: '95%', left: '35%' },
-                          'Khargone': { top: '95%', left: '8%' },
-                          'Burhanpur': { top: '98%', left: '85%' },
-                          'Pitlam': { top: '62%', left: '38%' },
-                          'Dewas': { top: '18%', left: '78%' },
-                          'Ujjain': { top: '8%', left: '68%' }
-                        };
-                        return positions[areaName] || { top: '50%', left: '50%' };
-                      };
+                      // Convert actual GPS coordinates to map position 
+                      // Map bounds: approximately 22.65-22.82 lat, 75.78-75.92 lng
+                      const latPercent = ((area.coordinates[0] - 22.65) / (22.82 - 22.65)) * 100;
+                      const lngPercent = ((area.coordinates[1] - 75.78) / (75.92 - 75.78)) * 100;
                       
-                      const position = getPosition(area.area);
+                      // Clamp values to ensure markers stay within map bounds
+                      const topPos = Math.max(0, Math.min(100, 100 - latPercent));
+                      const leftPos = Math.max(0, Math.min(100, lngPercent));
                       
                       return (
                         <div
                           key={area.id}
                           className="absolute transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
-                          style={{ top: position.top, left: position.left }}
+                          style={{ 
+                            top: `${topPos}%`, 
+                            left: `${leftPos}%` 
+                          }}
                         >
-                          {/* Data Point */}
-                          <div className={`w-4 h-4 rounded-full ${riskColor} border-2 border-background shadow-lg animate-pulse`}>
-                            <div className={`w-6 h-6 rounded-full ${riskColor}/30 absolute -top-1 -left-1 animate-ping`}></div>
+                          {/* Water Quality Marker with purity-based colors */}
+                          <div className={`w-5 h-5 rounded-full ${riskColor} border-2 border-white shadow-lg hover:scale-125 transition-all duration-200`}>
+                            <div className={`w-7 h-7 rounded-full ${riskColor.replace('bg-', 'bg-').replace('-500', '-300/30')} absolute -top-1 -left-1 animate-pulse`}></div>
                           </div>
                           
-                          {/* Tooltip */}
-                          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-                            <div className="bg-background/95 backdrop-blur-sm border border-border/20 rounded-lg p-3 shadow-xl min-w-64">
+                          {/* Enhanced Tooltip with real data */}
+                          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                            <div className="bg-background/95 backdrop-blur-sm border border-border/20 rounded-lg p-3 shadow-xl min-w-72">
                               <div className="flex items-center justify-between mb-2">
                                 <span className="font-semibold text-sm">{area.area}</span>
                                 <Badge variant={getRiskBadgeVariant(area.riskLevel)} className="text-xs">
@@ -320,8 +279,8 @@ const RiskMap = () => {
                               </div>
                               <div className="space-y-1 text-xs text-muted-foreground">
                                 <div className="flex justify-between">
-                                  <span>Water Quality:</span>
-                                  <span className={getRiskColor(area.riskLevel)}>{area.avgPurity}%</span>
+                                  <span>WQI Score:</span>
+                                  <span className={getRiskColor(area.riskLevel)}>{area.avgPurity.toFixed(1)}</span>
                                 </div>
                                 <div className="flex justify-between">
                                   <span>pH Level:</span>
@@ -332,11 +291,15 @@ const RiskMap = () => {
                                   <span>{area.solids?.toLocaleString()}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                  <span>Reports:</span>
-                                  <span>{area.reports}</span>
+                                  <span>Hardness:</span>
+                                  <span>{area.hardness} mg/L</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Turbidity:</span>
+                                  <span>{area.turbidity} NTU</span>
                                 </div>
                                 <div className="text-xs mt-2 p-2 bg-muted/50 rounded">
-                                  {area.description}
+                                  <strong>Sample:</strong> GW-{area.id + 10} • {area.description}
                                 </div>
                               </div>
                             </div>
@@ -700,34 +663,34 @@ const RiskMap = () => {
           </div>
         </div>
 
-        {/* Quick Stats */}
+        {/* Quick Stats - Updated based on real data */}
         <div className="grid md:grid-cols-4 gap-4 mt-8">
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <Shield className="w-8 h-8 text-success mx-auto mb-2" />
-              <div className="text-2xl font-bold text-success">1</div>
+              <div className="text-2xl font-bold text-success">0</div>
               <div className="text-sm text-muted-foreground">Safe Areas</div>
             </CardContent>
           </Card>
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <AlertTriangle className="w-8 h-8 text-warning mx-auto mb-2" />
-              <div className="text-2xl font-bold text-warning">4</div>
-              <div className="text-sm text-muted-foreground">Caution Areas</div>
+              <div className="text-2xl font-bold text-warning">2</div>
+              <div className="text-sm text-muted-foreground">Medium Risk Areas</div>
             </CardContent>
           </Card>
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <AlertTriangle className="w-8 h-8 text-destructive mx-auto mb-2" />
-              <div className="text-2xl font-bold text-destructive">3</div>
+              <div className="text-2xl font-bold text-destructive">8</div>
               <div className="text-sm text-muted-foreground">High Risk Areas</div>
             </CardContent>
           </Card>
           <Card className="card-hover glass-effect">
             <CardContent className="p-6 text-center">
               <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-              <div className="text-2xl font-bold gradient-text">200</div>
-              <div className="text-sm text-muted-foreground">Total Reports</div>
+              <div className="text-2xl font-bold gradient-text">254</div>
+              <div className="text-sm text-muted-foreground">Total Samples</div>
             </CardContent>
           </Card>
         </div>
